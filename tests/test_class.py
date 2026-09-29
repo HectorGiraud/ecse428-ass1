@@ -40,3 +40,10 @@ def test_calculator_does_substract(calc, a, b, result):
     calc.sub()
     assert calc.pop() == result
     
+def test_if_stack_underflow_while_substract_number_is_not_lost(calc):
+    calc.push(3)
+    try:
+        calc.sub()
+    except:
+        pass
+    assert calc.pop() == 3
