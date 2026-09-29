@@ -14,6 +14,8 @@ class Calculator():
         return self.stack.pop()
 
     def sub(self):
+        if len(self.stack) < 2:
+            raise IndexError()
         b = self.stack.pop()
         a = self.stack.pop()
         self.stack.append(a-b)
