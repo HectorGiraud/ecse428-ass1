@@ -9,3 +9,6 @@ class Calculator():
             raise ValueError(f"Argument '{number}' is not a valid number.")
         self.stack.append(number)
         return True
+
+    def pop(self):
+        return self.stack.pop()
