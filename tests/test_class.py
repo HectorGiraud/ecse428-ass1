@@ -62,3 +62,11 @@ def test_calculator_does_divide(calc, a, b, result):
     calc.push(b)
     calc.div()
     assert calc.pop() == pytest.approx(result)
+
+def test_if_stack_underflow_while_divide_number_is_not_lost(calc):
+    calc.push(3)
+    try:
+        calc.div()
+    except:
+        pass
+    assert calc.pop() == 3
