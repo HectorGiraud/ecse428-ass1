@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "snap",
+      "type": "shell",
+      "command": "documentation/snap.sh ${input:phase} ${input:n} ${input:test}",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    { "id": "phase", "type": "pickString", "description": "Phase", "options": ["red", "green"] },
+    { "id": "n", "type": "promptString", "description": "Increment number" },
+    { "id": "test", "type": "promptString", "description": "Test id (file::name)" }
+  ]
+}

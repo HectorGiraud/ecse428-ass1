@@ -1,0 +1,19 @@
+{
+  // Use the venv that uv creates
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+
+  // Testing panel: use pytest, not unittest
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.cwd": "${workspaceFolder}",
+
+  // Rediscover tests when files are saved
+  "python.testing.autoTestDiscoverOnSaveEnabled": true,
+
+  // Hide clutter in the file explorer
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  }
+}
