@@ -21,6 +21,8 @@ class Calculator():
         self.stack.append(a-b)
 
     def div(self):
+        if len(self.stack) < 2:
+            raise IndexError()
         b = self.stack.pop()
         a = self.stack.pop()
         self.stack.append(a/b)
