@@ -47,3 +47,18 @@ def test_if_stack_underflow_while_substract_number_is_not_lost(calc):
     except:
         pass
     assert calc.pop() == 3
+
+@pytest.mark.parametrize(
+        "a, b, result",
+        [
+            (1, 2, 0.5),
+            (1033, 334, 3.092814371257485),
+            (-1, 100, -0.01),
+        ]
+)
+def test_calculator_does_divide(calc, a, b, result):
+    calc.push(3)
+    calc.push(a)
+    calc.push(b)
+    calc.div()
+    assert calc.pop() == pytest.approx(result)
