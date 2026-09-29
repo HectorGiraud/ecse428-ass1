@@ -11,3 +11,8 @@ def test_calculator_instantiates(calc):
 
 def test_calculator_has_push(calc):
     assert calc.push(0)
+
+@pytest.mark.parametrize("arg", ["string", 1e333, True])
+def test_calculator_push_is_safe(calc, arg):
+    with pytest.raises(ValueError):
+        calc.push(arg)
