@@ -24,5 +24,8 @@ class Calculator():
         if len(self.stack) < 2:
             raise IndexError()
         b = self.stack.pop()
+        if b==0:
+            self.stack.append(b)
+            raise ZeroDivisionError()
         a = self.stack.pop()
         self.stack.append(a/b)
