@@ -70,3 +70,12 @@ def test_if_stack_underflow_while_divide_number_is_not_lost(calc):
     except:
         pass
     assert calc.pop() == 3
+
+def test_if_divide_by_zero_number_is_not_lost(calc):
+    calc.push(1)
+    calc.push(0)
+    try:
+        calc.div()
+    except:
+        pass
+    assert calc.pop() == 0
