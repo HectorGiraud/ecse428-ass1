@@ -16,3 +16,10 @@ def test_calculator_has_push(calc):
 def test_calculator_push_is_safe(calc, arg):
     with pytest.raises(ValueError):
         calc.push(arg)
+
+def test_calculator_has_working_pop(calc):
+    numbers = [0, -1, 2.5]
+    for n in numbers:
+        calc.push(n)
+    for n in reversed(numbers):
+        assert calc.pop() == n
