@@ -23,3 +23,20 @@ def test_calculator_has_working_pop(calc):
         calc.push(n)
     for n in reversed(numbers):
         assert calc.pop() == n
+
+
+@pytest.mark.parametrize(
+        "a, b, result",
+        [
+            (1, 2, -1),
+            (1033, 334, 699),
+            (1, 100, -99)
+        ]
+)
+def test_calculator_does_substract(calc, a, b, result):
+    calc.push(3)
+    calc.push(a)
+    calc.push(b)
+    calc.sub()
+    assert calc.pop() == result
+    
