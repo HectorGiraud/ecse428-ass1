@@ -29,3 +29,8 @@ class Calculator():
             raise ZeroDivisionError()
         a = self.stack.pop()
         self.stack.append(a/b)
+
+    def add(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a+b)

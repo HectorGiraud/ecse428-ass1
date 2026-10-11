@@ -79,3 +79,10 @@ def test_if_divide_by_zero_number_is_not_lost(calc):
     except:
         pass
     assert calc.pop() == 0
+
+
+def test_calculator_does_add(calc):
+    calc.push(3)
+    calc.push(5)
+    calc.add()
+    assert calc.pop() == 8
