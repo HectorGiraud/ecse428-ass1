@@ -86,3 +86,11 @@ def test_calculator_does_add(calc):
     calc.push(5)
     calc.add()
     assert calc.pop() == 8
+
+def test_if_add_number_is_not_lost(calc):
+    calc.push(3)
+    try:
+        calc.add()
+    except:
+        pass
+    assert calc.pop() == 3
