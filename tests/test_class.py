@@ -101,3 +101,10 @@ def test_calculator_does_multiply(calc):
     calc.mul()
     assert calc.pop() == 15
 
+def test_if_multiply_number_is_not_lost(calc):
+    calc.push(3)
+    try:
+        calc.mul()
+    except:
+        pass
+    assert calc.pop() == 3

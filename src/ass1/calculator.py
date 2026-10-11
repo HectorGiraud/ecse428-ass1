@@ -38,6 +38,8 @@ class Calculator():
         self.stack.append(a+b)
 
     def mul(self):
+        if len(self.stack) < 2:
+            raise IndexError()
         a = self.stack.pop()
         b = self.stack.pop()
         self.stack.append(a*b)
