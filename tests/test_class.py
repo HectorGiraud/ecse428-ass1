@@ -94,3 +94,10 @@ def test_if_add_number_is_not_lost(calc):
     except:
         pass
     assert calc.pop() == 3
+
+def test_calculator_does_multiply(calc):
+    calc.push(3)
+    calc.push(5)
+    calc.mul()
+    assert calc.pop() == 15
+

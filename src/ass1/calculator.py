@@ -36,3 +36,8 @@ class Calculator():
         b = self.stack.pop()
         a = self.stack.pop()
         self.stack.append(a+b)
+
+    def mul(self):
+        a = self.stack.pop()
+        b = self.stack.pop()
+        self.stack.append(a*b)
