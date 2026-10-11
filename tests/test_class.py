@@ -114,3 +114,7 @@ def test_calculator_does_delete(calc):
     calc.push(5)
     calc.delete()
     assert calc.pop() == 3
+
+def test_delete_on_empty_stack_raises(calc):
+    with pytest.raises(IndexError):
+        calc.delete()
