@@ -43,3 +43,6 @@ class Calculator():
         a = self.stack.pop()
         b = self.stack.pop()
         self.stack.append(a*b)
+
+    def delete(self):
+        self.stack.pop()

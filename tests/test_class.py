@@ -108,3 +108,9 @@ def test_if_multiply_number_is_not_lost(calc):
     except:
         pass
     assert calc.pop() == 3
+
+def test_calculator_does_delete(calc):
+    calc.push(3)
+    calc.push(5)
+    calc.delete()
+    assert calc.pop() == 3
