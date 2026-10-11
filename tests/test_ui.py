@@ -20,3 +20,105 @@ def test_decoder_handles_push_pop_with_reals(decoder):
     decoder.decode("push - 1")
     n = decoder.decode("pop")
     assert n == -1
+
+def test_decoder_handles_push_pop_with_complex_and_weird_inputs(decoder):
+    decoder.decode("push 2+3j")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push 2 + 3j")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push 2+ 3 j")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push 3 j+2")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push -3 j+2")
+    n = decoder.decode("pop")
+    assert n == 2-3j
+
+    decoder.decode("push --3 j+2")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push - - 3 j+2")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push -3 j")
+    n = decoder.decode("pop")
+    assert n == 3j
+
+    decoder.decode("push -+3 j")
+    n = decoder.decode("pop")
+    assert n == -3j
+
+    decoder.decode("push - + - 3 j")
+    n = decoder.decode("pop")
+    assert n == +3j
+
+    decoder.decode("push - - + - +-3j +- + - 4")
+    n = decoder.decode("pop")
+    assert n == 4+3j
+
+    decoder.decode("push 2+j3")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push 2 + j3")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push 2+ j 3")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push j 3 +2")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push -j 3+2")
+    n = decoder.decode("pop")
+    assert n == 2-3j
+
+    decoder.decode("push --j 3+2")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push - - j 3+2")
+    n = decoder.decode("pop")
+    assert n == 2+3j
+
+    decoder.decode("push -j 3")
+    n = decoder.decode("pop")
+    assert n == 3j
+
+    decoder.decode("push -+j 3")
+    n = decoder.decode("pop")
+    assert n == -3j
+
+    decoder.decode("push - + - j 3")
+    n = decoder.decode("pop")
+    assert n == +3j
+
+    decoder.decode("push - - + - +-j3 +- + - 4")
+    n = decoder.decode("pop")
+    assert n == 4+3j
+
+    decoder.decode("push - - -1")
+    n = decoder.decode("pop")
+    assert n == -1
+
+    decoder.decode("push - -1")
+    n = decoder.decode("pop")
+    assert n == 1
+
+    decoder.decode("push + + + +1")
+    n = decoder.decode("pop")
+    assert n == 1
+
