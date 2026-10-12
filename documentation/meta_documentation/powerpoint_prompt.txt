@@ -1,0 +1,90 @@
+to follow these instrcutions:
+
+PowerPoint Slide Set
+Each group must submit a PowerPoint presentation which clearly illustrates each step of
+the implementation of cdc:
+For each development increment:
+ Statement of the unit test and expected results.
+ Screen capture of unit test code
+ Screen capture demonstrating unit test failing
+ Screen capture of code changes highlighted
+ Screen capture demonstrating unit test passing
+ Screen capture illustrating all previous unit tests still pass after code chang
+
+i've captured automatically genereated screen captures with this program:
+#!/usr/bin/env bash
+# usage: snap.sh red|green <increment> <test id>
+set -u
+phase=$1; n=$2; test=$3
+out="documentation/shots/inc$(printf %02d "$n")"; mkdir -p "$out"
+
+# Run a command and save its output as an image, even if the command fails
+shot() { freeze --execute "bash -c 'COLUMNS=90 $1 || true'" --wrap 90 -o "$2"; }
+git add -A
+if [ "$phase" = red ]; then
+git diff --staged -- tests | freeze -l diff -o "$out/1-test-code.png"
+shot "uv run pytest $test" "$out/2-test-fails.png"
+git add "$out"
+git commit -qm "inc$n RED: $test"
+else
+git diff --staged -- src | freeze -l diff -o "$out/3-code-change.png"
+shot "uv run pytest $test" "$out/4-test-passes.png"
+shot "uv run pytest"       "$out/5-all-tests-pass.png"
+git add "$out"
+git commit -qm "inc$n GREEN: $test"
+fi
+echo "saved to $out"
+
+now I have 27 times 5 images as you can see in the screenshot
+make a script that automatically builds the powerpoint, with clear labels, especially knowing that the git history looks like this as you know from the above script:
+
+    73fb646 (HEAD -> main, origin/main, origin/HEAD) integration with bash script
+    9548558 inc27 GREEN: tests/test_ui.py::test_no_output_when_no_pop
+    7cc3a6a inc27 RED: tests/test_ui.py::test_no_output_when_no_pop
+    2d519a4 inc26 GREEN: tests/test_ui.py::test_delete_works_and_0_is_displayed
+    4745f6d inc26 RED: tests/test_ui.py::test_delete_works_and_0_is_displayed
+    ce5d719 inc25 GREEN: tests/test_ui.py::test_cli_escapes_errors
+    2c9e48d inc25 RED: tests/test_ui.py::test_cli_escapes_errors
+    580e0d7 inc24 GREEN: tests/test_ui.py::test_cli_works_for_multiple_lines_and_input_types
+    a6656d4 inc24 RED: tests/test_ui.py::test_cli_works_for_multiple_lines_and_input_types
+    88b807f inc23 GREEN: tests/test_ui.py::test_cli_works_for_one_line
+    90f1ee8 inc23 RED: tests/test_ui.py::test_cli_works_for_one_line
+    5ea44ee inc22 GREEN: tests/test_ui.py::test_cli_quits_on_eof
+    a98446f inc22 RED: tests/test_ui.py::test_cli_quits_on_eof
+    9d25d42 inc21 GREEN: tests/test_ui.py::test_decoder_handles_all_right_inputs_and_wrong_inputs
+    d36cb4f inc21 RED: tests/test_ui.py::test_decoder_handles_all_right_inputs_and_wrong_inputs
+    c50425b inc20 GREEN: tests/test_ui.py::test_decoder_handles_sequence_of_inputs
+    b7d85f9 inc20 RED: tests/test_ui.py::test_decoder_handles_sequence_of_inputs
+    b45cfac inc19 GREEN: tests/test_ui.py::test_decoder_rejects_bad_number_inputs
+    34a141e inc19 RED: tests/test_ui.py::test_decoder_rejects_bad_number_inputs
+    cc4fd92 inc18 GREEN: tests/test_ui.py::test_decoder_handles_decimal
+    f7d913e inc18 RED: tests/test_ui.py::test_decoder_handles_decimal
+    cb34666 inc17 GREEN: tests/test_ui.py::test_decoder_handles_push_pop_with_complex_and_weird_inputs
+    69dd06c inc17 RED: tests/test_ui.py::test_decoder_handles_push_pop_with_complex_and_weird_inputs
+    2c07019 inc16 GREEN: tests/test_ui.py::test_decoder_handles_push_pop_with_reals
+    f090884 inc16 RED: tests/test_ui.py::test_decoder_handles_push_pop_with_reals
+    3257490 inc15 GREEN: tests/test_ui.py::test_decoder_instantiates
+    33363d9 inc15 RED: tests/test_ui.py::test_decoder_instantiates
+    4f0578a inc14: tests/test_class.py::test_delete_on_empty_stack_raises (passes directly)
+    7d379f5 inc13: tests/test_class.py::test_calculator_does_delete
+    2729801 inc12: tests/test_class.py::test_if_multiply_number_is_not_lost
+    d93fba5 inc11: tests/test_class.py::test_calculator_does_multiply
+    f456f94 inc10: tests/test_class.py::test_if_add_number_is_not_lost
+    242614c inc9: tests/test_class.py::test_calculator_does_add
+    038d187 inc8 GREEN: tests/test_class.py::test_if_divide_by_zero_number_is_not_lost
+    a17cc75 inc8 RED: tests/test_class.py::test_if_divide_by_zero_number_is_not_lost
+    22811f0 inc7 GREEN: tests/test_class.py::test_if_stack_underflow_while_divide_number_is_not_lost
+    848ed1a inc7 RED: tests/test_class.py::test_if_stack_underflow_while_divide_number_is_not_lost
+    3a8c154 inc6 GREEN: tests/test_class.py::test_calculator_does_divide
+    30a08e4 inc6 RED: tests/test_class.py::test_calculator_does_divide
+    60e860a inc5 GREEN: tests/test_class.py::test_if_stack_underflow_while_substract_number_is_not_lost
+    9a75cf5 inc5 RED: tests/test_class.py::test_if_stack_underflow_while_substract_number_is_not_lost
+    581f619 inc4 GREEN: tests/test_class.py::test_calculator_does_substract
+    2dd9338 inc4 RED: tests/test_class.py::test_calculator_does_substract
+    095aa68 inc3 GREEN: tests/test_class.py::test_calculator_has_working_pop
+    6690114 inc3 RED: tests/test_class.py::test_calculator_has_working_pop
+    35193f6 inc2 GREEN: tests/test_class.py::test_calculator_push_is_safe
+    f83bfe7 inc2 RED: tests/test_class.py::test_calculator_push_is_safe
+    aa94aa9 inc1 GREEN: tests/test_class.py::test_calculator_has_push
+    2da1cc3 inc1 RED: tests/test_class.py::test_calculator_has_push
+    dfec25a share tasks, venv integration with vscode
