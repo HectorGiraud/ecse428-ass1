@@ -247,3 +247,6 @@ def run_session(text):
 def test_cli_quits_on_eof():
     run_session("")
     assert True
+
+def test_cli_works_for_one_line():
+    assert run_session("push 3+4---5j push 6 sub push 2 mul push 2 div pop\n") == "$>1.0 - j5.0\n$>\n"
