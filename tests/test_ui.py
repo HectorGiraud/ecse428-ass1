@@ -138,3 +138,29 @@ def test_decoder_handles_decimal(decoder):
     decoder.decode("push -j1.4 + 3.2")
     n = decoder.decode("pop")
     assert n == pytest.approx(3.2-1.4j)
+
+def test_decoder_rejects_bad_number_inputs(decoder):
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 3 4")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 3.")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push .")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push .2")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 3 .")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push . 2")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 34 456 678")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 4j 3")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push j4 3")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 4j3")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 4.5.6")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 0.+3")
