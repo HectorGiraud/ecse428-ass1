@@ -85,6 +85,8 @@ class Decoder():
                     self.calc.mul()
                 elif token == "div":
                     self.calc.div()
+                elif token == "delete":
+                    self.calc.delete()
                 else:
                     raise SyntaxError()
                 current+=1
@@ -93,7 +95,7 @@ class Decoder():
             raise
 
 def to_string(number):
-    return f"{float(number.real)} {"-" if number.imag<0 else "+"} j{abs(float(number.imag))}"
+    return f"{number.real:.17g} {"-" if number.imag<0 else "+"} j{abs(number.imag):.17g}"
 
 def run(stdin, stdout) -> int:
     decoder = Decoder()
@@ -109,7 +111,7 @@ def run(stdin, stdout) -> int:
             continue
         try:
             result = decoder.decode(line)
-            if result:
+            if str(result):
                 stdout.write(to_string(result) + "\n")
         except IndexError:
             stdout.write("Error: stack underflow\n")
