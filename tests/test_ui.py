@@ -1,4 +1,5 @@
 import pytest
+import io
 from ass1.ui import Decoder
 
 @pytest.fixture
@@ -235,6 +236,14 @@ def test_decoder_handles_all_right_inputs_and_wrong_inputs(decoder):
         decoder.decode("push3j+1 pop")
     with pytest.raises(SyntaxError):
         decoder.decode("push 1 .pop")
-            
-        
-        
+
+
+def run_session(text):
+    stdin = io.StringIO(text)
+    stdout = io.StringIO()
+    run(stdin, stdout)
+    return stdout.getvalue()
+
+def test_cli_quits_on_eof():
+    run_session("")
+    assert True
