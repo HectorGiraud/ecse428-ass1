@@ -3,7 +3,7 @@ from ass1.calculator import Calculator
 class Decoder():
     def __init__(self) -> None:
         self.calc = Calculator()
-        self.NUMBER_RESERVED = set("j-+0123456789")
+        self.NUMBER_RESERVED = set("j-+.0123456789")
 
     def decode(self, string):
         tokens = string.split()
@@ -24,7 +24,7 @@ class Decoder():
                     jbuffer = True
                 else:
                     if jbuffer:
-                        if char not in "1234567890":
+                        if char not in ".1234567890":
                             pythonic_possible_number+="j"
                             jbuffer = False
                     pythonic_possible_number+=char
