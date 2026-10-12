@@ -164,3 +164,33 @@ def test_decoder_rejects_bad_number_inputs(decoder):
         decoder.decode("push 4.5.6")
     with pytest.raises(SyntaxError):
         decoder.decode("push 0.+3")
+
+def test_decoder_handles_sequence_of_inputs(decoder):
+    decoder.decode("push 1.4 push 1.3")
+    n = decoder.decode("pop")
+    assert n == pytest.approx(1.3)
+    n = decoder.decode("pop")
+    assert n == pytest.approx(1.4)
+
+    n = decoder.decode("push 1 push 4 push 3 + 3j-3 push 2 push 5 pop")
+    assert n == 5
+    n = decoder.decode("push 3.4 pop")
+    assert n == pytest.approx(3.4)
+    n = decoder.decode("pop")
+    assert n == 2
+    n = decoder.decode("pop")
+    assert n == 3j
+    n = decoder.decode("pop")
+    assert n == 4
+    n = decoder.decode("pop")
+    assert n == 1
+    with pytest.raises(IndexError):
+        decoder.decode("pop")
+    
+
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 1.4 pop pop")
+
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 1 pop push 3")
+        
