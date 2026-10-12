@@ -122,3 +122,19 @@ def test_decoder_handles_push_pop_with_complex_and_weird_inputs(decoder):
     n = decoder.decode("pop")
     assert n == 1
 
+def test_decoder_handles_decimal(decoder):
+    decoder.decode("push 1.4")
+    n = decoder.decode("pop")
+    assert n == pytest.approx(1.4)
+
+    decoder.decode("push -1.4")
+    n = decoder.decode("pop")
+    assert n == pytest.approx(-1.4)
+
+    decoder.decode("push -1.0")
+    n = decoder.decode("pop")
+    assert n == pytest.approx(-1.0)
+
+    decoder.decode("push -j1.4 + 3.2")
+    n = decoder.decode("pop")
+    assert n == pytest.approx(3.2-1.4j)
