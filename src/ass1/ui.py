@@ -12,13 +12,26 @@ class Decoder():
             current += 1
             possible_number = ""
             while (not current >= len(tokens)) and (set(tokens[current]) <= self.NUMBER_RESERVED):
+                if (possible_number != ""
+                    and possible_number[-1] in ".0123456789"
+                    and tokens[current][0] in ".0123456789" 
+                ):
+                    raise SyntaxError()
+
                 possible_number+=tokens[current]
                 current+=1
 
             jbuffer = False
             pythonic_possible_number = ""
-            for char in possible_number:
+            for i, char in enumerate(possible_number):
+                if char == ".":
+                    if i == 0 or possible_number[i-1] not in "0123456789" or i==len(possible_number)-1 or possible_number[i+1] not in "0123456789":
+                        raise SyntaxError()
                 if char=="j":
+
+                    if i!=0 and i!=len(possible_number)-1 and possible_number[i-1] in "0123456789" and possible_number[i+1] in "0123456789":
+                        raise SyntaxError()
+
                     if jbuffer:
                         raise SyntaxError()
                     jbuffer = True
