@@ -92,6 +92,8 @@ class Decoder():
             self.calc.restore()
             raise
 
+def to_string(number):
+    return f"{number.real} {"-" if number.imag<0 else "+"} j{abs(number.imag)}"
 
 def run(stdin, stdout) -> int:
     decoder = Decoder()
@@ -102,3 +104,12 @@ def run(stdin, stdout) -> int:
         if line == "":            # EOF (Ctrl+D)
             stdout.write("\n")
             return 0
+        line = line.strip()
+        if not line:
+            continue
+        result = decoder.decode(line)
+        if result:
+            stdout.write(to_string(result) + "\n")
+
+if __name__ == "__main__":
+    sys.exit(run(sys.stdin, sys.stdout))
