@@ -3,6 +3,7 @@ from .tools import is_valid_number
 class Calculator():
     def __init__(self) -> None:
         self.stack = []
+        self.backup_stack = []
 
     def push(self, number):
         if not is_valid_number(number):
@@ -46,3 +47,9 @@ class Calculator():
 
     def delete(self):
         self.stack.pop()
+
+    def backup(self):
+        self.backup_stack = self.stack[:]
+
+    def restore(self):
+        self.stack = self.backup_stack[:]

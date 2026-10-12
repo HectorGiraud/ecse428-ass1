@@ -60,22 +60,38 @@ class Decoder():
             current+=1
         
 
-        #Second pass to check syntax
-        for i, token in enumerate(tokens):
-            if token == "pop":
-                if i+1!=len(tokens): raise SyntaxError
-
-        #Third pass to apply
+        #Second pass for logic
         current = 0
-        while current < len(tokens):
-            token = tokens[current]
-            if self.token_is_number(token)[0]: raise SyntaxError()
-            elif token == "push":
+        self.calc.backup()
+        try:
+            while current < len(tokens):
+                token = tokens[current]
+                if self.token_is_number(token)[0]: raise SyntaxError()
+                elif token == "push":
+                    current+=1
+                    if current >= len(tokens): raise SyntaxError()
+                    isNumber, value = self.token_is_number(tokens[current])
+                    if not isNumber: raise SyntaxError()
+                    self.calc.push(value)
+                elif token == "pop":
+                    if current!=len(tokens)-1: raise SyntaxError()
+                    return self.calc.pop()
+                elif token == "add":
+                    self.calc.add()
+                elif token == "sub":
+                    self.calc.sub()
+                elif token == "mul":
+                    self.calc.mul()
+                elif token == "div":
+                    self.calc.div()
+                else:
+                    raise SyntaxError()
                 current+=1
-                if current >= len(tokens): raise SyntaxError()
-                isNumber, value = self.token_is_number(tokens[current])
-                if not isNumber: raise SyntaxError()
-                self.calc.push(value)
-            elif tokens[current] == "pop":
-                return self.calc.pop()
-            current+=1
+        except Exception:
+            self.calc.restore()
+            raise
+
+
+
+d = Decoder()
+print(d.token_is_number("3+3j-3")[0])
