@@ -266,5 +266,5 @@ def test_delete_works_and_0_is_displayed():
     assert run_session("delete") == "$>Error: stack underflow\n$>\n"
 
 def test_no_output_when_no_pop():
-    assert run_session("push 1\n") == "$>\n$>\n"
-    assert run_session("push 3 push 4 push 6") == "$>\n$>\n"
+    assert run_session("push 1\n") == "$>$>\n"
+    assert run_session("push 3 push 4 push 6") == "$>$>\n"

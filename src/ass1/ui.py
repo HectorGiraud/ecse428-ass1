@@ -111,7 +111,7 @@ def run(stdin, stdout) -> int:
             continue
         try:
             result = decoder.decode(line)
-            if str(result):
+            if result is not None:
                 stdout.write(to_string(result) + "\n")
         except IndexError:
             stdout.write("Error: stack underflow\n")
