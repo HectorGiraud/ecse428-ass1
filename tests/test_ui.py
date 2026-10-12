@@ -52,7 +52,7 @@ def test_decoder_handles_push_pop_with_complex_and_weird_inputs(decoder):
 
     decoder.decode("push -3 j")
     n = decoder.decode("pop")
-    assert n == 3j
+    assert n == -3j
 
     decoder.decode("push -+3 j")
     n = decoder.decode("pop")
@@ -96,7 +96,7 @@ def test_decoder_handles_push_pop_with_complex_and_weird_inputs(decoder):
 
     decoder.decode("push -j 3")
     n = decoder.decode("pop")
-    assert n == 3j
+    assert n == -3j
 
     decoder.decode("push -+j 3")
     n = decoder.decode("pop")
