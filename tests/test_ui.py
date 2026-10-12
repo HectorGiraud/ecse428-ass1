@@ -1,6 +1,6 @@
 import pytest
 import io
-from ass1.ui import Decoder
+from ass1.ui import Decoder, run
 
 @pytest.fixture
 def decoder():

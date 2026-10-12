@@ -1,4 +1,5 @@
 from ass1.calculator import Calculator
+import sys
 
 class Decoder():
     def __init__(self) -> None:
@@ -92,6 +93,12 @@ class Decoder():
             raise
 
 
-
-d = Decoder()
-print(d.token_is_number("3+3j-3")[0])
+def run(stdin, stdout) -> int:
+    decoder = Decoder()
+    while True:
+        stdout.write("$>")
+        stdout.flush()
+        line = stdin.readline()
+        if line == "":            # EOF (Ctrl+D)
+            stdout.write("\n")
+            return 0
