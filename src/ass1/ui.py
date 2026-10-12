@@ -93,7 +93,7 @@ class Decoder():
             raise
 
 def to_string(number):
-    return f"{number.real} {"-" if number.imag<0 else "+"} j{abs(number.imag)}"
+    return f"{float(number.real)} {"-" if number.imag<0 else "+"} j{abs(float(number.imag))}"
 
 def run(stdin, stdout) -> int:
     decoder = Decoder()
