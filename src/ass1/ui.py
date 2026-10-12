@@ -116,7 +116,7 @@ def run(stdin, stdout) -> int:
         except ZeroDivisionError:
             stdout.write("Error: division by zero\n")
         except SyntaxError:
-            stdout.write("Error: wrong syntax\n")
+            stdout.write("Error: invalid token\n")
 
 if __name__ == "__main__":
     sys.exit(run(sys.stdin, sys.stdout))

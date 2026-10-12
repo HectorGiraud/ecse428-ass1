@@ -249,12 +249,18 @@ def test_cli_quits_on_eof():
     assert True
 
 def test_cli_works_for_one_line():
-    assert run_session("push 3+4---5j push 6 sub push 2 mul push 2 div pop\n") == "$>1.0 - j5.0\n$>\n"
+    assert run_session("push 3+4---5j push 6 sub push 2 mul push 2 div pop\n") == "$>1 - j5\n$>\n"
 
 def test_cli_works_for_multiple_lines_and_input_types():
-    assert run_session("push 3+4---5j push 6 sub push 2 mul push 2 div pop\npush 1 push 2 add pop\n") == "$>1.0 - j5.0\n$>3.0 + j0.0\n$>\n"
+    assert run_session("push 3+4---5j push 6 sub push 2 mul push 2 div pop\npush 1 push 2 add pop\n") == "$>1 - j5\n$>3 + j0\n$>\n"
 
 def test_cli_escapes_errors():
     assert run_session("add") == "$>Error: stack underflow\n$>\n"
     assert run_session("push 1 push 0 div") == "$>Error: division by zero\n$>\n"
-    assert run_session("push pop pop") == "$>Error: wrong syntax\n$>\n"
+    assert run_session("push pop pop") == "$>Error: invalid token\n$>\n"
+
+def test_delete_works_and_0_is_displayed():
+    assert run_session("push 0 pop\n") == "$>0 + j0\n$>\n"
+    assert run_session("push 1 push 0 +j00.00 mul pop\n") == "$>0 + j0\n$>\n"
+    assert run_session("push 1.0 push 2 delete pop\n") == "$>1 + j0\n$>\n"
+    assert run_session("delete") == "$>Error: stack underflow\n$>\n"
