@@ -193,4 +193,48 @@ def test_decoder_handles_sequence_of_inputs(decoder):
 
     with pytest.raises(SyntaxError):
         decoder.decode("push 1 pop push 3")
+
+def test_decoder_handles_all_right_inputs_and_wrong_inputs(decoder):
+    n = decoder.decode("push 1.4 push 4 mul push 2 add pop")
+    assert n == pytest.approx(7.6)
+    n = decoder.decode("push 3+4---5j push 6 sub push 2 mul push 2 div pop")
+    assert n == pytest.approx(1-5j)
+
+    with pytest.raises(IndexError):
+        decoder.decode("add")
+    with pytest.raises(IndexError):
+        decoder.decode("push 1 add")
+
+    with pytest.raises(IndexError):
+        decoder.decode("sub")
+    with pytest.raises(IndexError):
+        decoder.decode("push 1 sub")
+
+    with pytest.raises(IndexError):
+        decoder.decode("mul")
+    with pytest.raises(IndexError):
+        decoder.decode("push 1 mul")
+
+    with pytest.raises(IndexError):
+        decoder.decode("div")
+    with pytest.raises(IndexError):
+        decoder.decode("push 1 div")
+
+
+    with pytest.raises(SyntaxError):
+        decoder.decode("a")
+    with pytest.raises(SyntaxError):
+        decoder.decode("a push 1.3")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 1.3 a")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 1 push 2 push 3 push 4 subadd")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 3j+1pop")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push3j+1 pop")
+    with pytest.raises(SyntaxError):
+        decoder.decode("push 1 .pop")
+            
+        
         
