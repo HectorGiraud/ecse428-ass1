@@ -107,9 +107,16 @@ def run(stdin, stdout) -> int:
         line = line.strip()
         if not line:
             continue
-        result = decoder.decode(line)
-        if result:
-            stdout.write(to_string(result) + "\n")
+        try:
+            result = decoder.decode(line)
+            if result:
+                stdout.write(to_string(result) + "\n")
+        except IndexError:
+            stdout.write("Error: stack underflow\n")
+        except ZeroDivisionError:
+            stdout.write("Error: division by zero\n")
+        except SyntaxError:
+            stdout.write("Error: wrong syntax\n")
 
 if __name__ == "__main__":
     sys.exit(run(sys.stdin, sys.stdout))

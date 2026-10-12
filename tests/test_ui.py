@@ -255,6 +255,6 @@ def test_cli_works_for_multiple_lines_and_input_types():
     assert run_session("push 3+4---5j push 6 sub push 2 mul push 2 div pop\npush 1 push 2 add pop\n") == "$>1.0 - j5.0\n$>3.0 + j0.0\n$>\n"
 
 def test_cli_escapes_errors():
-    assert run_session("add") == "$>Error: stack underflow\n$>"
-    assert run_session("push 1 push 0 div") == "$>Error: division by zero\n$>"
-    assert run_session("push pop pop") == "$>Error: wrong syntax\n$>"
+    assert run_session("add") == "$>Error: stack underflow\n$>\n"
+    assert run_session("push 1 push 0 div") == "$>Error: division by zero\n$>\n"
+    assert run_session("push pop pop") == "$>Error: wrong syntax\n$>\n"
