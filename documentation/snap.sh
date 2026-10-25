@@ -5,7 +5,8 @@ phase=$1; n=$2; test=$3
 out="documentation/shots/inc$(printf %02d "$n")"; mkdir -p "$out"
 
 # Run a command and save its output as an image, even if the command fails
-shot() { freeze --execute "bash -c 'COLUMNS=90 $1 || true'" --wrap 90 -o "$2"; }
+# (piped instead of `freeze --execute`, which panics on Windows' pty output)
+shot() { (COLUMNS=90 $1 --color=yes || true) | tr -d '\r' | freeze --language ansi --wrap 90 -o "$2"; }
 git add -A
 if [ "$phase" = red ]; then
   git diff --staged -- tests | freeze -l diff -o "$out/1-test-code.png"
@@ -13,7 +14,7 @@ if [ "$phase" = red ]; then
   git add "$out"
   git commit -qm "inc$n RED: $test"
 else
-  git diff --staged -- src | freeze -l diff -o "$out/3-code-change.png"
+  git diff --staged -- src pyproject.toml | freeze -l diff -o "$out/3-code-change.png"
   shot "uv run pytest $test" "$out/4-test-passes.png"
   shot "uv run pytest"       "$out/5-all-tests-pass.png"
   git add "$out"
