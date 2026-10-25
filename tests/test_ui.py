@@ -272,3 +272,7 @@ def test_no_output_when_no_pop():
 def test_cli_is_case_insensitive():
     assert run_session("PuSh 3+4---5j PuSh 6 SuB PuSh 2 MuL PuSh 2 DiV PoP\n") == "$>1 - j5\n$>\n"
     assert run_session("pUsH 1 pUsH 2 aDd pOp\n") == "$>3 + j0\n$>\n"
+
+def test_negative_zero_is_normalized() :
+    assert run_session("push -0.0 pop\n") == "$>0 + j0\n$>\n"
+    assert run_session("push 1 push -0.0 mul pop\n") == "$>0 + j0\n$>\n"
