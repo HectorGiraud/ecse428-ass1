@@ -95,6 +95,7 @@ class Decoder():
             raise
 
 def to_string(number):
+    number = complex(number) + 0 
     return f"{number.real:.17g} {"-" if number.imag<0 else "+"} j{abs(number.imag):.17g}"
 
 def run(stdin, stdout) -> int:
