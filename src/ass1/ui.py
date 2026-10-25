@@ -14,7 +14,7 @@ class Decoder():
             return False, None
 
     def decode(self, string):
-        tokens = string.split()
+        tokens = string.lower().split()
 
         #Firt pass to handle numbers
         current = 0
